@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 //permets d'avoir un email unique pour l'inscription dans la base de données
 const uniqueValidator = require('mongoose-unique-validator');

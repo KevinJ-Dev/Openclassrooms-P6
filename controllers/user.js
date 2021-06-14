@@ -24,7 +24,7 @@ exports.signup = (req, res, next) => {
                 });
                 // Verification des enregistrements cryptés
                 console.log("Voici l'email encrypté : ", encodedString);
-                console.log("Voici le mot de passe hashé : ", hash);
+                console.log("Voici le mot de passe : ", hash);
                 user.save()
                     .then(() => res.status(201).json({ message: 'Utilisateur créé' }))
                     .catch(error => res.status(400).json({ error }));
@@ -35,7 +35,7 @@ exports.signup = (req, res, next) => {
 // Récupération d'un utilisateur déja existant dans la base de donnée
 exports.login = (req, res, next) => {
     // Chiffrement de l'émail afin de le comparer avec la base de donnée
-    key = "motDePasseInviolable:)";
+    key = "motDePasseCacher:)";
     cipher = crypto.createCipher('aes192', key)
     cipher.update(req.body.email, 'binary', 'hex')
     encodedString = cipher.final('hex')
