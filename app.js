@@ -22,10 +22,11 @@ mongoose.connect('mongodb+srv://Admin:tX56lH0tchRbbTTk@cluster0.pi3xb.mongodb.ne
 
 // Models
 const User = require('./models/user');
-
+// const Sauce = require('./models/sauce')
 
 // Routes 
 const userRoutes = require('./routes/user');
+// const sauceRoutes = require('./routes/sauce');
 
 // Donner accée aux requêtes et éviter les erreurs CORS
 app.use((req, res, next) => {
@@ -41,7 +42,7 @@ app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Url des routes
-
+// app.use('/', sauceRoutes);
 app.use('/', userRoutes);
 
 //exporter une application pour rentrer dans les autres fichiers du projet notament le serveur

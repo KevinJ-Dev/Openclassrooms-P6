@@ -1,4 +1,4 @@
-//avec bcryp pour hasher le mdp pour le token d'authentification et Crypto afin de chiffrer l'email)
+// Plugin Npm Node.js (avec bcryp pour hasher le mdp, jwt pour le token d'authentification et Crypto afin de chiffrer l'email)
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -13,7 +13,7 @@ exports.signup = (req, res, next) => {
         .then(
             hash => {
                 // Chiffrement de l'email 
-                key = "motDePasseInviolable:)";
+                key = "motDePasseCacher:)";
                 cipher = crypto.createCipher('aes192', key)
                 cipher.update(req.body.email, 'binary', 'hex')
                 encodedString = cipher.final('hex')
@@ -24,7 +24,7 @@ exports.signup = (req, res, next) => {
                 });
                 // Verification des enregistrements cryptés
                 console.log("Voici l'email encrypté : ", encodedString);
-                console.log("Voici le mot de passe : ", hash);
+                console.log("Voici le mot de passe hashé : ", hash);
                 user.save()
                     .then(() => res.status(201).json({ message: 'Utilisateur créé' }))
                     .catch(error => res.status(400).json({ error }));
@@ -35,12 +35,12 @@ exports.signup = (req, res, next) => {
 // Récupération d'un utilisateur déja existant dans la base de donnée
 exports.login = (req, res, next) => {
     // Chiffrement de l'émail afin de le comparer avec la base de donnée
-    key = "motDePasseCacher:)";
+    key = "motDePasseInviolable:)";
     cipher = crypto.createCipher('aes192', key)
     cipher.update(req.body.email, 'binary', 'hex')
     encodedString = cipher.final('hex')
     console.log("Voici le FindOne = ", encodedString)
-    //comparer l'émail chiffré avec celui de la base de donnée
+    // Nous allons comparer l'émail chiffré avec celui de la base de donnée
     User.findOne({ email: encodedString })
         .then(user => {
             if (!user) {
