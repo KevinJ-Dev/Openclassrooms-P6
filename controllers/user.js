@@ -1,4 +1,4 @@
-// Plugin Npm Node.js (avec bcryp pour hasher le mdp, jwt pour le token d'authentification et Crypto afin de chiffrer l'email)
+//(avec bcryp pour hasher le mdp, jwt pour le token d'authentification et Crypto afin de chiffrer l'email)
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -12,18 +12,12 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(
             hash => {
-                // Chiffrement de l'email 
-                key = "motDePasseCacher:)";
-                cipher = crypto.createCipher('aes192', key)
-                cipher.update(req.body.email, 'binary', 'hex')
-                encodedString = cipher.final('hex')
-                // Enregistrement des données de l'utilisateur
                 const user = new User({
-                    email: encodedString,
+                    email: req.body.email,
                     password: hash
                 });
                 // Verification des enregistrements cryptés
-                console.log("Voici l'email encrypté : ", encodedString);
+                // console.log("Voici l'email encrypté", encodedString);
                 console.log("Voici le mot de passe hashé : ", hash);
                 user.save()
                     .then(() => res.status(201).json({ message: 'Utilisateur créé' }))
@@ -31,17 +25,9 @@ exports.signup = (req, res, next) => {
             })
         .catch(error => res.status(500).json({ error }));
 };
-
 // Récupération d'un utilisateur déja existant dans la base de donnée
 exports.login = (req, res, next) => {
-    // Chiffrement de l'émail afin de le comparer avec la base de donnée
-    key = "motDePasseInviolable:)";
-    cipher = crypto.createCipher('aes192', key)
-    cipher.update(req.body.email, 'binary', 'hex')
-    encodedString = cipher.final('hex')
-    console.log("Voici le FindOne = ", encodedString)
-    // Nous allons comparer l'émail chiffré avec celui de la base de donnée
-    User.findOne({ email: encodedString })
+    User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
