@@ -57,3 +57,14 @@ les mots de passe sont stockés de manière sécurisée ;
 les adresses mails de la base de données sont uniques et un plugin Mongoose
 approprié est utilisé pour s’assurer de leur caractère unique et rapporter des erreurs.
 
+    Installation Backend
+
+cd/backend - pour aller dans le dossier backend
+npm install - pour installer les dépendances du projet
+nodemon - pour lancer le serveur backend
+
+    Installation Frontend
+
+cd/frontend - pour aller dans le dossier frontend
+npm install - pour installer les dépendances du projet
+ng serve - pour lancer le serveur frontend
